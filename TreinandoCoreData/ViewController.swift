@@ -45,13 +45,14 @@ class ViewController: UIViewController {
         //let predicate = NSPredicate(format: "descricao beginswith [c] %@", "a")
         //let predicate = NSPredicate(format: "preco <= %@", "800")
         
-        let filtroDescricao = NSPredicate(format: "descricao contains [c] %@", "IPho")
-        let filtroPreco = NSPredicate(format: "preco <= %@", "800")
-        let combinacaoFiltro = NSCompoundPredicate(andPredicateWithSubpredicates: [filtroPreco,filtroDescricao])
-      
+        //let filtroDescricao = NSPredicate(format: "descricao contains [c] %@", "IPho")
+        //let filtroPreco = NSPredicate(format: "preco <= %@", "800")
+        //  let combinacaoFiltro = NSCompoundPredicate(andPredicateWithSubpredicates: [filtroPreco,filtroDescricao])
+        
+      let predicate = NSPredicate(format: "descricao == %@", "Mac Pro 15")
         //APLICAR FILTRO NA REQUISICAO
         requisicao.sortDescriptors = [ordenacaoAZ]
-       requisicao.predicate = combinacaoFiltro
+        requisicao.predicate = predicate
         
         do {
             let produtos = try context.fetch(requisicao)
@@ -63,6 +64,16 @@ class ViewController: UIViewController {
                             if let preco = produto.value(forKey: "preco"){
                                  
                                 print( String(describing: descricao) + " | "  + String(describing: cor) + " | " + String(describing: preco))
+                                
+                                // ATUALIZAR PRODUTO
+                                produto.setValue(350, forKey: "preco")
+                                
+                                do{
+                                    try context.save()
+                                    print("Sucesso ao atualizar o produto")
+                                }catch{
+                                    print("Erro ao atualizar o produto")
+                                }
                             }
                         }
                     }
