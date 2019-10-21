@@ -12,13 +12,13 @@ class ViewController: UIViewController {
         let context = appDelegate.persistentContainer.viewContext
         
         //CRIAR ENTIDADE
-       /* let produto = NSEntityDescription.insertNewObject(forEntityName: "Produto", into: context)
+      /*  let produto = NSEntityDescription.insertNewObject(forEntityName: "Produto", into: context)
         
         //CONFIGURA OBJETO
-        produto.setValue("Jamilton ", forKey: "nome")
-        produto.setValue("jamiltonsouza", forKey: "login")
-        produto.setValue(20, forKey: "idade")
-        produto.setValue("12345", forKey: "senha")
+        produto.setValue("Acer", forKey: "descricao")
+        produto.setValue("Prata", forKey: "cor")
+        produto.setValue(1500.90, forKey: "preco")
+        
         
         
         //SALVAR DADOS
@@ -30,9 +30,25 @@ class ViewController: UIViewController {
         }*/
         
         
+        
+        
         //RECUPERAR PRODUTOS
         
         let requisicao = NSFetchRequest<NSFetchRequestResult>(entityName: "Produto")
+        
+        //ORDENAR DE A - Z OU Z - A OU NUM
+        let ordenacaoAZ = NSSortDescriptor(key: "descricao", ascending: true)
+        
+        //APLICAR FILTROS
+        //let predicate = NSPredicate(format: "descricao == %@", "Dell")
+        //let predicate = NSPredicate(format: "descricao contains [c] %@", "IPho")
+        //let predicate = NSPredicate(format: "descricao beginswith [c] %@", "a")
+        let predicate = NSPredicate(format: "preco <= %@", "800")
+        
+        //APLICAR FILTRO NA REQUISICAO
+        requisicao.sortDescriptors = [ordenacaoAZ]
+       requisicao.predicate = predicate
+        
         do {
             let produtos = try context.fetch(requisicao)
             
@@ -42,7 +58,7 @@ class ViewController: UIViewController {
                         if let cor = produto.value(forKey: "cor"){
                             if let preco = produto.value(forKey: "preco"){
                                  
-                                print( String(describing: descricao) + "/"  + String(describing: cor) + "/" + String(describing: preco))
+                                print( String(describing: descricao) + " | "  + String(describing: cor) + " | " + String(describing: preco))
                             }
                         }
                     }
