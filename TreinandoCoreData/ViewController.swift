@@ -49,10 +49,10 @@ class ViewController: UIViewController {
         //let filtroPreco = NSPredicate(format: "preco <= %@", "800")
         //  let combinacaoFiltro = NSCompoundPredicate(andPredicateWithSubpredicates: [filtroPreco,filtroDescricao])
         
-      let predicate = NSPredicate(format: "descricao == %@", "Mac Pro 15")
+     // let predicate = NSPredicate(format: "descricao == %@", "Dell")
         //APLICAR FILTRO NA REQUISICAO
         requisicao.sortDescriptors = [ordenacaoAZ]
-        requisicao.predicate = predicate
+      //  requisicao.predicate = predicate
         
         do {
             let produtos = try context.fetch(requisicao)
@@ -65,15 +65,25 @@ class ViewController: UIViewController {
                                  
                                 print( String(describing: descricao) + " | "  + String(describing: cor) + " | " + String(describing: preco))
                                 
+                                //REMOVER PRODUTO
+                               /* context.delete(produto)
+                                do{
+                                    try context.save()
+                                    print("Sucesso ao remover o produto")
+                                }catch{
+                                    print("Erro ao remover o produto")
+                                }*/
+                                
+                                
                                 // ATUALIZAR PRODUTO
-                                produto.setValue(350, forKey: "preco")
+                               /* produto.setValue("preto", forKey: "cor")
                                 
                                 do{
                                     try context.save()
                                     print("Sucesso ao atualizar o produto")
                                 }catch{
                                     print("Erro ao atualizar o produto")
-                                }
+                                }*/
                             }
                         }
                     }
